@@ -1,0 +1,6 @@
+{
+  "sampler_seed": 41,
+  "batch_size": 4,
+  "optimizer_updates": 10000,
+  "ordered_batch_ids_sha256": "9e86a66932812a968089c1044968c2d6999c2dc7926ed30117b1ea605b2e5269"
+}

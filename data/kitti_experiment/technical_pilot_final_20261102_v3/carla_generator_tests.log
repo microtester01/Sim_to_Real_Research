@@ -1,0 +1,12 @@
+test_bbox_iou_is_one_for_equal_boxes (test_carla_dataset.CarlaDatasetTests) ... ok
+test_dataset_yaml_reserves_ignore_classes (test_carla_dataset.CarlaDatasetTests) ... ok
+test_legacy_dataset_cannot_be_extended_with_mixed_label_policy (test_carla_dataset.CarlaDatasetTests) ... ok
+test_rejected_visible_fragment_is_retained_as_ignore_region (test_carla_dataset.CarlaDatasetTests) ... ok
+test_semantic_mask_ignores_non_target_classes (test_carla_dataset.CarlaDatasetTests) ... ok
+test_semantic_mask_is_clipped_to_projected_actor_box (test_carla_dataset.CarlaDatasetTests) ... ok
+test_yolo_row_is_normalized_and_uses_class_id (test_carla_dataset.CarlaDatasetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+OK

@@ -1,0 +1,58 @@
+{
+  "architecture": "YOLOv8s",
+  "class_count": 2,
+  "pretrained_weights": false,
+  "seeds": {
+    "40": {
+      "file": "yolov8s_nc2_seed40.pt",
+      "sha256": "ca5fbb55253d9ff538c901bbb91f3724721232cc05eb0f5f6514643f56dab69c",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "41": {
+      "file": "yolov8s_nc2_seed41.pt",
+      "sha256": "f84075147890759706783ca85baa0d9e8fe01fe27c460b9be67e8ef08ccfdea6",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "42": {
+      "file": "yolov8s_nc2_seed42.pt",
+      "sha256": "6155d9823a8dd35c8b206241ccc61aae3c8aa1c91de444c9c062b4992857e49e",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "43": {
+      "file": "yolov8s_nc2_seed43.pt",
+      "sha256": "c6092a6d72bd53d7c0492aac0536bf1d9424c5bda95daf0ccd2038dcdb34b581",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "44": {
+      "file": "yolov8s_nc2_seed44.pt",
+      "sha256": "da07ddb6ec935069fcb727e707d819d5554ac57ada9404f7c885f248cfad5353",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "45": {
+      "file": "yolov8s_nc2_seed45.pt",
+      "sha256": "22036851df46777a9444b6555733a64788f0861273979a4a507736d68769fefd",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "46": {
+      "file": "yolov8s_nc2_seed46.pt",
+      "sha256": "eb3a700f328afa3130125277a6ea1ad5b57b0ba0c25981074f5a24e0ab9420bf",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "47": {
+      "file": "yolov8s_nc2_seed47.pt",
+      "sha256": "16a4b2cf32427ac01621852c58fcbd020e313d147ef7ebd4768af72124c1b5e7",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "48": {
+      "file": "yolov8s_nc2_seed48.pt",
+      "sha256": "48d95651252d1bb4e31963d1c3f7644f1b68ef589c95d47ac0a0e10e3a916719",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    },
+    "49": {
+      "file": "yolov8s_nc2_seed49.pt",
+      "sha256": "3c44cf38787614c7f8efd845dade5dde4c3ebc9f5212afe8cb52137721d23bed",
+      "initialization": "randomly initialized DetectionModel(yolov8s.yaml, nc=2)"
+    }
+  },
+  "pairing_rule": "All configurations in a seed block load the exact same state_dict identified by its SHA-256; source loader order is seeded separately."
+}

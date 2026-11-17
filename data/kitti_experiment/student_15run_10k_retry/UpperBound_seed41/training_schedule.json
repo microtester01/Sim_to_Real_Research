@@ -1,0 +1,8 @@
+{
+  "source_loader_batches": 1122,
+  "planned_epochs": 9,
+  "optimizer_updates": 10000,
+  "updates_per_epoch_limit": 1122,
+  "max_batches_per_epoch": 0,
+  "max_updates": 10000
+}

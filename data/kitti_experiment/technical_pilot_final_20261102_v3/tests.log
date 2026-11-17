@@ -1,0 +1,29 @@
+test_batchnorm_target_forward_freezes_running_stats_and_restores_mode (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_detector_state_dict_export_is_strictly_reloadable (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_domain_randomization_preserves_batch_shape_and_range (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_fixed_update_schedule_handles_different_dataset_sizes (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_grl_reverses_only_detector_feature_gradient (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_ignore_aware_loss_does_not_train_background_inside_ignore_box (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_kitti_conversion_preserves_target_and_ignore_boxes (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_lambda_schedule_reaches_zero_and_maximum (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_p4_layer_matches_yolov8s_p4_geometry (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_person_sitting_masks_pedestrian_but_not_cyclist_background (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_smoke_batch_cap_produces_exact_update_budget (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_source_batch_ids_are_required_and_keep_sampler_order (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_training_subsets_are_nested_and_group_preserving (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_unlabeled_dataset_returns_only_image_tensor (test_carla_adaptation.CarlaAdaptationTests) ... ok
+test_confidence_nms_and_detection_cap_are_fixed (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_dontcare_and_person_sitting_predictions_are_ignored_for_pedestrian (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_duplicate_detection_is_false_positive_not_ignored (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_match_uses_next_best_unmatched_ground_truth (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_parser_separates_targets_and_ignored_regions (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_perfect_detection_has_one_point_map (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_person_sitting_is_not_ignored_for_cyclist (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_ultralytics_nms_confidence_class_awareness_and_max_det (test_kitti_two_class_eval.KittiTwoClassEvaluationTests) ... ok
+test_adjustment_controls_familywise_error (test_holm_correction_demo.HolmCorrectionTests) ... ok
+test_invalid_p_values_raise (test_holm_correction_demo.HolmCorrectionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.075s
+
+OK

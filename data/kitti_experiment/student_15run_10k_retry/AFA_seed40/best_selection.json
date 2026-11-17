@@ -1,0 +1,6 @@
+{
+  "selected_epoch": 4,
+  "selection_metric": "internal KITTI mAP@0.50:0.95",
+  "selection_value": 0.0028340470405966516,
+  "validation_manifest": "C:\\Users\\kaktuz2000\\Desktop\\СМЗ\\data\\kitti_experiment\\yolo8\\split_manifest.json"
+}

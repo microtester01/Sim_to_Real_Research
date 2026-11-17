@@ -1,0 +1,141 @@
+{
+  "variant_mAP": {
+    "Baseline": {
+      "mean": 0.0017240219696425796,
+      "percentile_95_ci": [
+        0.001169259398926127,
+        0.0024604581637203715
+      ]
+    },
+    "DR": {
+      "mean": 0.002478161665982811,
+      "percentile_95_ci": [
+        0.001682044638378403,
+        0.002974229838072082
+      ]
+    },
+    "AFA": {
+      "mean": 0.0013181346601967327,
+      "percentile_95_ci": [
+        0.0008096321110214071,
+        0.0019187042059888436
+      ]
+    },
+    "Combo": {
+      "mean": 0.0014987870625080791,
+      "percentile_95_ci": [
+        0.0008185503438400498,
+        0.0025296946954545606
+      ]
+    },
+    "UpperBound": {
+      "mean": 0.092577026987147,
+      "percentile_95_ci": [
+        0.08872044612044652,
+        0.09770198865458493
+      ]
+    }
+  },
+  "effects": {
+    "interaction": {
+      "mean": -0.0005734872940288849,
+      "percentile_95_ci": [
+        -0.001615783017307942,
+        0.0006020944744196241
+      ]
+    },
+    "combo_minus_baseline": {
+      "mean": -0.0002252349071345004,
+      "percentile_95_ci": [
+        -0.0012834795837231795,
+        0.0008707432332684743
+      ]
+    },
+    "combo_minus_85pct_upper_bound": {
+      "mean": -0.07719168587656686,
+      "percentile_95_ci": [
+        -0.08158678277516745,
+        -0.07413163028775552
+      ]
+    }
+  },
+  "p_values": {
+    "positive_interaction": 0.5454545454545454,
+    "combo_practical_gain": 1.0,
+    "upper_bound_gap_within_15_percent": 1.0
+  },
+  "protocol": {
+    "bootstrap": "paired hierarchical cluster bootstrap: resample the three seed pairs with replacement; within each selected seed, resample test image IDs with replacement and apply identical image weights to all variants",
+    "draws": 10,
+    "random_seed": 20261108,
+    "test_image_count": 1496,
+    "training_seeds": [
+      40,
+      41,
+      42
+    ],
+    "checkpoint_selection": "best.pt selected exclusively by validation mAP",
+    "primary_metric": "internal two-class mAP@0.50:0.95",
+    "one_sided_nulls": {
+      "positive_interaction": "I <= 0",
+      "combo_practical_gain": "Combo - Baseline <= 0.05",
+      "upper_bound_gap_within_15_percent": "Combo - 0.85 * UpperBound <= 0"
+    },
+    "p_value_method": "centered one-sided bootstrap tail probability with plus-one correction",
+    "multiple_testing": "Holm step-down adjustment across the three preregistered criteria"
+  },
+  "point_estimates_by_seed": {
+    "Baseline": [
+      0.0020237694721966263,
+      0.001634084151044745,
+      0.0006135807442516702
+    ],
+    "DR": [
+      0.002650640835073691,
+      0.0021114529385682815,
+      0.0012404228564585947
+    ],
+    "AFA": [
+      0.0014275519772022343,
+      0.000819330825107298,
+      0.0007937531230903421
+    ],
+    "Combo": [
+      0.0009706423625287339,
+      0.0011497643714815375,
+      0.0021154410071303783
+    ],
+    "UpperBound": [
+      0.0946143431945308,
+      0.08844356344210363,
+      0.08779134838601098
+    ]
+  },
+  "point_estimate_effects": {
+    "interaction": -0.00017862348228891664,
+    "combo_minus_baseline": -1.186220878413068e-05,
+    "combo_minus_85pct_upper_bound": -0.07532867300936931
+  },
+  "holm_adjusted_p_values": {
+    "positive_interaction": 1.0,
+    "combo_practical_gain": 1.0,
+    "upper_bound_gap_within_15_percent": 1.0
+  },
+  "criteria": {
+    "positive_interaction": {
+      "raw_p": 0.5454545454545454,
+      "holm_adjusted_p": 1.0,
+      "confirmed_at_0_05": false
+    },
+    "combo_practical_gain": {
+      "raw_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "confirmed_at_0_05": false
+    },
+    "upper_bound_gap_within_15_percent": {
+      "raw_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "confirmed_at_0_05": false
+    }
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "device": "NVIDIA GeForce RTX 3060",
+  "torch_version": "2.8.0+cu128",
+  "cuda_runtime": "12.8",
+  "gpu_memory_gib": 12.0,
+  "updates": [
+    {
+      "epoch": 1,
+      "batch": 1,
+      "source_detection_loss": 113.61526489257812,
+      "source_box_loss": 6.442169189453125,
+      "source_cls_loss": 17.605546951293945,
+      "source_dfl_loss": 4.356101036071777,
+      "domain_loss": 2.748997449874878,
+      "grl_lambda": 0.0,
+      "domain_accuracy": 0.75,
+      "source_image_ids": [
+        "T01_E005_F000142",
+        "T01_E013_F000024",
+        "T01_E003_F000183",
+        "T01_E014_F000136"
+      ],
+      "source_label_examples": [
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.2080560177564621,
+            0.7039112448692322,
+            0.034543611109256744,
+            0.09554614871740341
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.07171900570392609,
+            0.691784143447876,
+            0.014699411578476429,
+            0.03601360321044922
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.9755992889404297,
+            0.35180217027664185,
+            0.048801422119140625,
+            0.13988056778907776
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.005923151969909668,
+            0.3867723047733307,
+            0.011846351437270641,
+            0.08715639263391495
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.6937834620475769,
+            0.00853199977427721,
+            0.02713298797607422,
+            0.01706399954855442
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.9540910124778748,
+            0.5588769316673279,
+            0.030524635687470436,
+            0.08309497684240341
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.8582774996757507,
+            0.5512457489967346,
+            0.020349884405732155,
+            0.039003755897283554
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.6717378497123718,
+            0.600848376750946,
+            0.030524635687470436,
+            0.08055124431848526
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.9901270270347595,
+            0.5652362704277039,
+            0.01611023023724556,
+            0.03306837007403374
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.743952751159668,
+            0.2675169110298157,
+            0.02483205869793892,
+            0.060813236981630325
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.7366044521331787,
+            0.2563678026199341,
+            0.010135531425476074,
+            0.024325324222445488
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.8465749621391296,
+            0.28069308400154114,
+            0.018243981525301933,
+            0.039528608322143555
+          ]
+        }
+      ],
+      "target_image_ids": [
+        "001475",
+        "003754",
+        "004204",
+        "004848"
+      ],
+      "source_batch_size": 4,
+      "target_batch_size": 4,
+      "p4_shape": [
+        4,
+        256,
+        40,
+        40
+      ],
+      "source_p4_gradient_norm": 0.15924564003944397,
+      "target_p4_gradient_norm": 0.0,
+      "detector_parameter_gradient_norm": 523.779296875,
+      "discriminator_parameter_gradient_norm": 2.171692132949829,
+      "target_bn_running_stats_max_delta": 0.0
+    },
+    {
+      "epoch": 1,
+      "batch": 2,
+      "source_detection_loss": 165.20755004882812,
+      "source_box_loss": 6.70790433883667,
+      "source_cls_loss": 30.411678314208984,
+      "source_dfl_loss": 4.1823039054870605,
+      "domain_loss": 2.652655601501465,
+      "grl_lambda": 0.9999092042625952,
+      "domain_accuracy": 0.625,
+      "source_image_ids": [
+        "T01_E019_F000024",
+        "T01_E010_F000166",
+        "T01_E003_F000126",
+        "T01_E005_F000168"
+      ],
+      "source_label_examples": [
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.6866950392723083,
+            0.3675857186317444,
+            0.03388652950525284,
+            0.0640079528093338
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.5903692245483398,
+            0.35503512620925903,
+            0.011923027224838734,
+            0.03137645870447159
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.46172577142715454,
+            0.38609781861305237,
+            0.02196350134909153,
+            0.04831972345709801
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.6772820353507996,
+            0.36507558822631836,
+            0.008785438723862171,
+            0.021335983648896217
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.39972734451293945,
+            0.28721991181373596,
+            0.04688100889325142,
+            0.1148107573390007
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.41360029578208923,
+            0.2661712169647217,
+            0.019135093316435814,
+            0.04592428356409073
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.20598426461219788,
+            0.3120955526828766,
+            0.03444328531622887,
+            0.07462692260742188
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.5647677779197693,
+            0.28339287638664246,
+            0.017221642658114433,
+            0.03827028349041939
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.2127002775669098,
+            0.5282544493675232,
+            0.032437514513731,
+            0.09267854690551758
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.130679652094841,
+            0.5199133157730103,
+            0.02224283292889595,
+            0.042632102966308594
+          ]
+        },
+        {
+          "class": "Pedestrian",
+          "normalized_xywh": [
+            0.2511619031429291,
+            0.5361320376396179,
+            0.016682147979736328,
+            0.03614464029669762
+          ]
+        },
+        {
+          "class": "Cyclist",
+          "normalized_xywh": [
+            0.28765425086021423,
+            0.5694041848182678,
+            0.02187933959066868,
+            0.05688629299402237
+          ]
+        }
+      ],
+      "target_image_ids": [
+        "007016",
+        "002620",
+        "002764",
+        "005067"
+      ],
+      "source_batch_size": 4,
+      "target_batch_size": 4,
+      "p4_shape": [
+        4,
+        256,
+        40,
+        40
+      ],
+      "source_p4_gradient_norm": 1.0387145280838013,
+      "target_p4_gradient_norm": 0.004616449121385813,
+      "detector_parameter_gradient_norm": 2410.61572265625,
+      "discriminator_parameter_gradient_norm": 1.9562463760375977,
+      "target_bn_running_stats_max_delta": 0.0
+    }
+  ],
+  "detector_only_prediction_count": 4,
+  "detector_only_inference_config": {
+    "confidence": 0.25,
+    "nms_iou": 0.7,
+    "max_det": 300,
+    "agnostic_nms": false
+  },
+  "checkpoint_keys": [
+    "ema",
+    "model",
+    "train_args",
+    "updates"
+  ],
+  "checkpoint_contains_discriminator": false,
+  "detector_only_checkpoint": "C:\\Users\\kaktuz2000\\Desktop\\СМЗ\\data\\kitti_experiment\\technical_pilot_final_20261102_v3\\Combo_seed40\\last.pt",
+  "test_summary": "Ran 24 tests in 0.075s",
+  "carla_generator_test_summary": "Ran 7 tests in 0.004s",
+  "training_stdout_summary": [
+    "{\"epoch\": 1, \"batch\": 1, \"source_detection_loss\": 113.61526489257812, \"source_box_loss\": 6.442169189453125, \"source_cls_loss\": 17.605546951293945, \"source_dfl_loss\": 4.356101036071777, \"domain_loss\": 2.748997449874878, \"grl_lambda\": 0.0, \"domain_accuracy\": 0.75, \"source_image_ids\": [\"T01_E005_F000142\", \"T01_E013_F000024\", \"T01_E003_F000183\", \"T01_E014_F000136\"], \"source_label_examples\": [{\"class\": \"Cyclist\", \"normalized_xywh\": [0.2080560177564621, 0.7039112448692322, 0.034543611109256744, 0.09554614871740341]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.07171900570392609, 0.691784143447876, 0.014699411578476429, 0.03601360321044922]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.9755992889404297, 0.35180217027664185, 0.048801422119140625, 0.13988056778907776]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.005923151969909668, 0.3867723047733307, 0.011846351437270641, 0.08715639263391495]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.6937834620475769, 0.00853199977427721, 0.02713298797607422, 0.01706399954855442]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.9540910124778748, 0.5588769316673279, 0.030524635687470436, 0.08309497684240341]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.8582774996757507, 0.5512457489967346, 0.020349884405732155, 0.039003755897283554]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.6717378497123718, 0.600848376750946, 0.030524635687470436, 0.08055124431848526]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.9901270270347595, 0.5652362704277039, 0.01611023023724556, 0.03306837007403374]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.743952751159668, 0.2675169110298157, 0.02483205869793892, 0.060813236981630325]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.7366044521331787, 0.2563678026199341, 0.010135531425476074, 0.024325324222445488]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.8465749621391296, 0.28069308400154114, 0.018243981525301933, 0.039528608322143555]}], \"target_image_ids\": [\"001475\", \"003754\", \"004204\", \"004848\"], \"source_batch_size\": 4, \"target_batch_size\": 4, \"p4_shape\": [4, 256, 40, 40], \"source_p4_gradient_norm\": 0.15924564003944397, \"target_p4_gradient_norm\": 0.0, \"detector_parameter_gradient_norm\": 523.779296875, \"discriminator_parameter_gradient_norm\": 2.171692132949829, \"target_bn_running_stats_max_delta\": 0.0}",
+    "{\"epoch\": 1, \"batch\": 2, \"source_detection_loss\": 165.20755004882812, \"source_box_loss\": 6.70790433883667, \"source_cls_loss\": 30.411678314208984, \"source_dfl_loss\": 4.1823039054870605, \"domain_loss\": 2.652655601501465, \"grl_lambda\": 0.9999092042625952, \"domain_accuracy\": 0.625, \"source_image_ids\": [\"T01_E019_F000024\", \"T01_E010_F000166\", \"T01_E003_F000126\", \"T01_E005_F000168\"], \"source_label_examples\": [{\"class\": \"Cyclist\", \"normalized_xywh\": [0.6866950392723083, 0.3675857186317444, 0.03388652950525284, 0.0640079528093338]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.5903692245483398, 0.35503512620925903, 0.011923027224838734, 0.03137645870447159]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.46172577142715454, 0.38609781861305237, 0.02196350134909153, 0.04831972345709801]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.6772820353507996, 0.36507558822631836, 0.008785438723862171, 0.021335983648896217]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.39972734451293945, 0.28721991181373596, 0.04688100889325142, 0.1148107573390007]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.41360029578208923, 0.2661712169647217, 0.019135093316435814, 0.04592428356409073]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.20598426461219788, 0.3120955526828766, 0.03444328531622887, 0.07462692260742188]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.5647677779197693, 0.28339287638664246, 0.017221642658114433, 0.03827028349041939]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.2127002775669098, 0.5282544493675232, 0.032437514513731, 0.09267854690551758]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.130679652094841, 0.5199133157730103, 0.02224283292889595, 0.042632102966308594]}, {\"class\": \"Pedestrian\", \"normalized_xywh\": [0.2511619031429291, 0.5361320376396179, 0.016682147979736328, 0.03614464029669762]}, {\"class\": \"Cyclist\", \"normalized_xywh\": [0.28765425086021423, 0.5694041848182678, 0.02187933959066868, 0.05688629299402237]}], \"target_image_ids\": [\"007016\", \"002620\", \"002764\", \"005067\"], \"source_batch_size\": 4, \"target_batch_size\": 4, \"p4_shape\": [4, 256, 40, 40], \"source_p4_gradient_norm\": 1.0387145280838013, \"target_p4_gradient_norm\": 0.004616449121385813, \"detector_parameter_gradient_norm\": 2410.61572265625, \"discriminator_parameter_gradient_norm\": 1.9562463760375977, \"target_bn_running_stats_max_delta\": 0.0}"
+  ]
+}

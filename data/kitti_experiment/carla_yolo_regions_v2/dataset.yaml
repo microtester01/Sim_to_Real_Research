@@ -1,0 +1,8 @@
+path: C:/Users/kaktuz2000/Desktop/СМЗ/data/kitti_experiment/carla_yolo_regions_v2
+train: images/train
+val: images/val
+names:
+  0: Pedestrian
+  1: Cyclist
+  2: IgnoreDontCare
+  3: IgnorePersonSitting
