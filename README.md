@@ -25,3 +25,27 @@ test_carla_adaptation.py — тестирует компоненты обуче�
 test_carla_dataset.py — тестирует генерацию и преобразование CARLA-разметки.
 test_kitti_two_class_eval.py — тестирует правила KITTI-оценивания.
 test_kitti_factorial_bootstrap.py — тестирует bootstrap.
+
+Из корня репозитория запустить bootstrap по сохранённым предсказаниям можно так:
+python .\kitti_factorial_bootstrap.py
+  --runs "data\kitti_experiment\student_15run_10k_retry"
+  --manifest "data\kitti_experiment\yolo8\split_manifest.json"
+  --labels "data\kitti_raw\training\label_2"
+  --predictions-dir "data\kitti_experiment\student_15run_10k_retry\test_eval"
+  --output "data\kitti_experiment\student_15run_10k_retry\test_eval\factorial_bootstrap_reproduced.json"
+  --draws 10000
+  --seed 20261108
+  --batch-size 32
+  
+Команды для повторной оценки отдельного checkpoint, например для Baseline seed 40:
+python .\kitti_two_class_eval.py
+  --checkpoint "data\kitti_experiment\student_15run_10k_retry\Baseline_seed40\best.pt"
+  --images "data\kitti_experiment\yolo8\images\test"
+  --labels "data\kitti_raw\training\label_2"
+  --split-manifest "data\kitti_experiment\yolo8\split_manifest.json"
+  --split test
+  --output "data\kitti_experiment\student_15run_10k_retry\test_eval\Baseline_seed40_reproduced.json"
+  --predictions-output "data\kitti_experiment\student_15run_10k_retry\test_eval\Baseline_seed40_reproduced_predictions.json.gz"
+  --device 0
+
+
