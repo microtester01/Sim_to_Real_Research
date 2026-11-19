@@ -48,4 +48,7 @@ python .\kitti_two_class_eval.py
   --predictions-output "data\kitti_experiment\student_15run_10k_retry\test_eval\Baseline_seed40_reproduced_predictions.json.gz"
   --device 0
 
+CARLA-validation. Сохранённые предсказания 12 выбранных checkpoint, GT и ID оценочных кадров находятся в data/kitti_experiment/carla_validation_eval/reproducible_package/. 
+Метрики можно пересчитать без инференса и GPU командой python .\carla_validation_eval.py --mode score. 
+Для повторного инференса на локально доступных CARLA-validation изображениях и checkpoint нужно выполнить python .\carla_validation_eval.py --mode all --device 0 --batch-size 8.
 
