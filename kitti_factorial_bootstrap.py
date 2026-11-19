@@ -39,7 +39,9 @@ class RunMetricCache:
         ],
     ) -> None:
         self.gt_counts: dict[str, np.ndarray] = {}
-        self.events: dict[str, list[tuple[np.ndarray, np.ndarray, np.ndarray]]] = {}
+        self.events: dict[
+            str, list[tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]
+        ] = {}
         for class_id, class_name in enumerate(CLASSES):
             gt_by_image = [annotations[image_id][0][class_name] for image_id in image_ids]
             self.gt_counts[class_name] = np.asarray(
@@ -104,19 +106,28 @@ class RunMetricCache:
                         )
 
                 records.sort(key=lambda item: (-item[0], item[1], item[2]))
-                last_true_positive = max(
-                    (index for index, item in enumerate(records) if item[3]),
-                    default=-1,
+                last_true_positive_score = min(
+                    (item[0] for item in records if item[3]),
+                    default=None,
                 )
-                if last_true_positive >= 0:
-                    records = records[: last_true_positive + 1]
+                if last_true_positive_score is not None:
+                    records = [
+                        item for item in records if item[0] >= last_true_positive_score
+                    ]
                 else:
                     records = []
+                scores = np.asarray([item[0] for item in records], dtype=np.float64)
+                block_starts = (
+                    np.flatnonzero(np.r_[True, scores[1:] != scores[:-1]])
+                    if scores.size
+                    else np.empty(0, dtype=np.int64)
+                )
                 class_events.append(
                     (
                         np.asarray([item[1] for item in records], dtype=np.int16),
                         np.asarray([item[3] for item in records], dtype=np.float64),
                         np.asarray([item[4] for item in records], dtype=np.float64),
+                        block_starts,
                     )
                 )
             self.events[class_name] = class_events
@@ -125,15 +136,27 @@ class RunMetricCache:
     def _weighted_ap(
         image_counts: np.ndarray,
         gt_counts: np.ndarray,
-        events: tuple[np.ndarray, np.ndarray, np.ndarray],
+        events: tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
+        group_ties: bool,
     ) -> np.ndarray:
         total_gt = image_counts @ gt_counts
-        image_indices, is_tp, is_fp = events
+        image_indices, is_tp, is_fp, block_starts = events
         if image_indices.size == 0:
-            return np.zeros(image_counts.shape[0], dtype=np.float64)
+            ap = np.zeros(image_counts.shape[0], dtype=np.float64)
+            ap[total_gt == 0] = np.nan
+            return ap
         weights = image_counts[:, image_indices]
-        true_positives = np.cumsum(weights * is_tp, axis=1)
-        false_positives = np.cumsum(weights * is_fp, axis=1)
+        weighted_true_positives = weights * is_tp
+        weighted_false_positives = weights * is_fp
+        if group_ties:
+            weighted_true_positives = np.add.reduceat(
+                weighted_true_positives, block_starts, axis=1
+            )
+            weighted_false_positives = np.add.reduceat(
+                weighted_false_positives, block_starts, axis=1
+            )
+        true_positives = np.cumsum(weighted_true_positives, axis=1)
+        false_positives = np.cumsum(weighted_false_positives, axis=1)
         precision = true_positives / np.maximum(
             true_positives + false_positives, 1.0
         )
@@ -153,23 +176,28 @@ class RunMetricCache:
                 positions = np.searchsorted(
                     recall[row], recall_levels, side="left"
                 )
-                valid = positions < image_indices.size
+                valid = positions < true_positives.shape[1]
                 ap[row] = np.mean(
                     np.where(
                         valid,
-                        precision_envelope[row, np.minimum(positions, image_indices.size - 1)],
+                        precision_envelope[
+                            row,
+                            np.minimum(positions, true_positives.shape[1] - 1),
+                        ],
                         0.0,
                     )
                 )
         ap[total_gt == 0] = np.nan
         return ap
 
-    def map_for_image_counts(self, image_counts: np.ndarray) -> np.ndarray:
+    def map_for_image_counts(
+        self, image_counts: np.ndarray, group_ties: bool = True
+    ) -> np.ndarray:
         class_aps = []
         for class_name in CLASSES:
             threshold_aps = [
                 self._weighted_ap(
-                    image_counts, self.gt_counts[class_name], events
+                    image_counts, self.gt_counts[class_name], events, group_ties
                 )
                 for events in self.events[class_name]
             ]
@@ -194,6 +222,74 @@ def load_predictions(path: Path) -> dict[str, list[list[Any]]]:
     return predictions
 
 
+def image_group_indices(
+    image_ids: list[str], group_map: dict[str, Any]
+) -> np.ndarray:
+    groups = group_map.get("groups")
+    if not isinstance(groups, list) or not groups:
+        raise ValueError("pHash group map must contain a non-empty groups list")
+    if group_map.get("image_count") != len(image_ids):
+        raise ValueError("pHash group map image count does not match the test split")
+    if group_map.get("group_count") != len(groups):
+        raise ValueError("pHash group map group count does not match its groups list")
+    if len(set(image_ids)) != len(image_ids):
+        raise ValueError("Test split contains duplicate image IDs")
+
+    image_index_by_id = {image_id: index for index, image_id in enumerate(image_ids)}
+    group_index_by_image = np.full(len(image_ids), -1, dtype=np.int32)
+    for group_index, group in enumerate(groups):
+        if not isinstance(group, dict):
+            raise ValueError("Each pHash group must be an object")
+        members = group.get("image_ids")
+        if not isinstance(members, list) or not members:
+            raise ValueError("Each pHash group must contain image IDs")
+        for image_id in members:
+            if image_id not in image_index_by_id:
+                raise ValueError("pHash group contains an unknown image ID: {}".format(image_id))
+            image_index = image_index_by_id[image_id]
+            if group_index_by_image[image_index] != -1:
+                raise ValueError("Image ID appears in multiple pHash groups: {}".format(image_id))
+            group_index_by_image[image_index] = group_index
+
+    missing = [
+        image_id
+        for image_id, group_index in zip(image_ids, group_index_by_image)
+        if group_index < 0
+    ]
+    if missing:
+        raise ValueError(
+            "pHash group map is missing image ID(s): {}".format(
+                ", ".join(missing[:5])
+            )
+        )
+    return group_index_by_image
+
+
+def load_group_map(path: Path, image_ids: list[str]) -> np.ndarray:
+    group_map = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(group_map, dict):
+        raise ValueError("pHash group map must contain a JSON object")
+    return image_group_indices(image_ids, group_map)
+
+
+def sample_crossed_bootstrap_draws(
+    rng: np.random.Generator,
+    draws: int,
+    seed_count: int,
+    image_group_indices: np.ndarray,
+    group_count: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    selected_seeds = rng.integers(0, seed_count, size=(draws, seed_count))
+    sampled_groups = rng.integers(0, group_count, size=(draws, group_count))
+    group_weights = np.zeros((draws, group_count), dtype=np.uint16)
+    for row in range(draws):
+        group_weights[row] = np.bincount(
+            sampled_groups[row], minlength=group_count
+        )
+    image_weights = group_weights[:, image_group_indices]
+    return selected_seeds, image_weights
+
+
 def percentile_interval(values: np.ndarray) -> list[float]:
     return [float(value) for value in np.quantile(values, [0.025, 0.975])]
 
@@ -211,7 +307,8 @@ def holm_adjust(p_values: dict[str, float]) -> dict[str, float]:
 
 def run_bootstrap(
     caches: dict[str, list[RunMetricCache]],
-    image_count: int,
+    image_group_indices: np.ndarray,
+    group_count: int,
     draws: int,
     random_seed: int,
     batch_size: int,
@@ -221,14 +318,9 @@ def run_bootstrap(
     distributions = {variant: np.empty(draws, dtype=np.float64) for variant in VARIANTS}
     for offset in range(0, draws, batch_size):
         size = min(batch_size, draws - offset)
-        selected_seeds = rng.integers(0, len(SEEDS), size=(size, len(SEEDS)))
-        counts = np.empty((size, len(SEEDS), image_count), dtype=np.uint16)
-        for row in range(size):
-            for slot in range(len(SEEDS)):
-                sampled_images = rng.integers(0, image_count, size=image_count)
-                counts[row, slot] = np.bincount(
-                    sampled_images, minlength=image_count
-                )
+        selected_seeds, image_weights = sample_crossed_bootstrap_draws(
+            rng, size, len(SEEDS), image_group_indices, group_count
+        )
 
         per_variant = {
             variant: np.empty((size, len(SEEDS)), dtype=np.float64)
@@ -239,11 +331,11 @@ def run_bootstrap(
                 rows = np.flatnonzero(selected_seeds[:, slot] == selected_seed)
                 if rows.size == 0:
                     continue
-                image_weights = counts[rows, slot].astype(np.float64)
+                selected_image_weights = image_weights[rows].astype(np.float64)
                 for variant in VARIANTS:
                     per_variant[variant][rows, slot] = caches[variant][
                         selected_seed
-                    ].map_for_image_counts(image_weights)
+                    ].map_for_image_counts(selected_image_weights)
         for variant in VARIANTS:
             distributions[variant][offset : offset + size] = np.mean(
                 per_variant[variant], axis=1
@@ -298,13 +390,14 @@ def run_bootstrap(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Hierarchical image-and-seed bootstrap for the CARLA-to-KITTI factorial experiment."
+        description="Crossed pHash-group and seed bootstrap for the CARLA-to-KITTI factorial experiment."
     )
     parser.add_argument("--runs", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--labels", type=Path, required=True)
     parser.add_argument("--predictions-dir", type=Path, required=True)
     parser.add_argument("--checkpoint-manifest", type=Path, required=True)
+    parser.add_argument("--group-map", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--draws", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=20261108)
@@ -318,12 +411,16 @@ def main() -> None:
         args.checkpoint_manifest.read_text(encoding="utf-8")
     )
     image_ids = manifest["split_image_ids"]["test"]
+    group_index_by_image = load_group_map(args.group_map, image_ids)
+    group_count = int(group_index_by_image.max()) + 1
     annotations = load_annotations(image_ids, args.labels)
     caches: dict[str, list[RunMetricCache]] = {}
     point_estimates: dict[str, list[float]] = {}
+    tie_block_point_estimates: dict[str, list[float]] = {}
     for variant in VARIANTS:
         caches[variant] = []
         point_estimates[variant] = []
+        tie_block_point_estimates[variant] = []
         for seed in SEEDS:
             run_dir = args.runs / "{}_seed{}".format(variant, seed)
             selection_path = run_dir / "best_selection.json"
@@ -364,13 +461,19 @@ def main() -> None:
                     )
                 )
             cache = RunMetricCache(image_ids, predictions, annotations)
-            original_score = float(np.mean(cache.map_for_image_counts(np.ones((1, len(image_ids))))[0:1]))
+            all_images = np.ones((1, len(image_ids)), dtype=np.float64)
+            original_score = float(
+                cache.map_for_image_counts(all_images, group_ties=False)[0]
+            )
             if not np.isclose(original_score, point_estimates[variant][-1], atol=1e-12):
                 raise ValueError(
                     "Cached weighted AP does not reproduce test mAP for {} seed {}: {} vs {}".format(
                         variant, seed, original_score, point_estimates[variant][-1]
                     )
                 )
+            tie_block_point_estimates[variant].append(
+                float(cache.map_for_image_counts(all_images, group_ties=True)[0])
+            )
             caches[variant].append(cache)
 
     point_estimate_effects = {
@@ -390,17 +493,21 @@ def main() -> None:
     }
     result = run_bootstrap(
         caches,
-        len(image_ids),
+        group_index_by_image,
+        group_count,
         args.draws,
         args.seed,
         args.batch_size,
         point_estimate_effects,
     )
     result["protocol"] = {
-        "bootstrap": "paired hierarchical cluster bootstrap: resample the three seed pairs with replacement; within each selected seed, resample test image IDs with replacement and apply identical image weights to all variants",
+        "bootstrap": "crossed paired hierarchical cluster bootstrap: resample the three seed pairs with replacement and independently resample pHash test-image groups once per replicate; apply that same group-weight vector to every selected seed slot and all five variants",
         "draws": args.draws,
         "random_seed": args.seed,
         "test_image_count": len(image_ids),
+        "test_image_group_count": group_count,
+        "test_image_group_map": str(args.group_map),
+        "tie_policy": "point estimates are retained from the validated test reports; for bootstrap resamples, within-image equal-confidence detections retain prediction order for matching and equal-confidence TP/FP outcomes are accumulated as one score block",
         "training_seeds": list(SEEDS),
         "checkpoint_selection": "best.pt selected exclusively by validation mAP",
         "primary_metric": "internal two-class mAP@0.50:0.95",
@@ -413,6 +520,16 @@ def main() -> None:
         "multiple_testing": "Holm step-down adjustment across the three preregistered criteria",
     }
     result["point_estimates_by_seed"] = point_estimates
+    result["bootstrap_tie_block_point_estimates_by_seed"] = tie_block_point_estimates
+    result["bootstrap_tie_block_point_estimate_deltas_by_seed"] = {
+        variant: [
+            tie_value - point_value
+            for tie_value, point_value in zip(
+                tie_block_point_estimates[variant], point_estimates[variant]
+            )
+        ]
+        for variant in VARIANTS
+    }
     result["point_estimate_effects"] = point_estimate_effects
     adjusted = holm_adjust(result["p_values"])
     result["holm_adjusted_p_values"] = adjusted
