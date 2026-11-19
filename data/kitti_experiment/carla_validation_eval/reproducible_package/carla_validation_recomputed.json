@@ -1,0 +1,693 @@
+{
+  "protocol": "CARLA validation internal two-class mAP; YOLO normalized xywh labels decoded to pixel xyxy half-open boxes; 101-point interpolated AP; IoU 0.50:0.05:0.95",
+  "ignore_policy": "IgnoreDontCare detections ignored at IoA >= 0.5 for both classes; IgnorePersonSitting likewise for Pedestrian only; target-class ground truth matching is attempted first",
+  "ground_truth_conversion": {
+    "label_policy_version": "semantic-ignore-v1",
+    "source_format": "YOLO class_id center_x center_y width height, normalized to image size",
+    "class_ids": {
+      "0": "Pedestrian",
+      "1": "Cyclist",
+      "2": "IgnoreDontCare",
+      "3": "IgnorePersonSitting"
+    },
+    "coordinate_conversion": "pixel_xyxy = ((center_x - width/2)*image_width, (center_y - height/2)*image_height, (center_x + width/2)*image_width, (center_y + height/2)*image_height)",
+    "ignore_mapping": {
+      "IgnoreDontCare": "ignored for Pedestrian and Cyclist",
+      "IgnorePersonSitting": "ignored for Pedestrian only"
+    }
+  },
+  "ignore_ioa_threshold": 0.5,
+  "prediction_confidence_floor": 0.001,
+  "nms_iou": 0.7,
+  "max_detections_per_image": 300,
+  "agnostic_nms": false,
+  "image_size": [
+    1280,
+    720
+  ],
+  "image_count": 1465,
+  "image_ids_file": "carla_validation_image_ids.txt",
+  "ground_truth_file": "carla_validation_ground_truth.json.gz",
+  "runs": {
+    "Baseline_seed40": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6727210087857504,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9456483701157085,
+            "0.55": 0.9346362900906126,
+            "0.60": 0.9219821835157912,
+            "0.65": 0.9029206466509274,
+            "0.70": 0.8790578546718173,
+            "0.75": 0.8080319642325968,
+            "0.80": 0.6291910615277071,
+            "0.85": 0.3270015842654294,
+            "0.90": 0.07308830887469811,
+            "0.95": 0.003480483446254331
+          },
+          "mAP_50_95": 0.6425038747391543,
+          "ground_truth_count": 2599,
+          "true_positives": 2536,
+          "false_positives": 8184,
+          "ignored_detections": 147
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9475916003097116,
+            "0.55": 0.9442941449311522,
+            "0.60": 0.9359367039544939,
+            "0.65": 0.921106089069733,
+            "0.70": 0.8987002601388773,
+            "0.75": 0.8489847843157095,
+            "0.80": 0.7311934460937946,
+            "0.85": 0.5374304718142067,
+            "0.90": 0.2491044689278307,
+            "0.95": 0.015039458767954811
+          },
+          "mAP_50_95": 0.7029381428323465,
+          "ground_truth_count": 2697,
+          "true_positives": 2616,
+          "false_positives": 6230,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Baseline_seed40",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Baseline_seed40/best.pt",
+        "checkpoint_sha256": "ace4e48a3dcf49315e15d57f2aa8e07a7ff52d9b7168e3d932bf79d5832788a2",
+        "selection": {
+          "selected_epoch": 6,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.005862872147782675
+        }
+      },
+      "image_count": 1465
+    },
+    "Baseline_seed41": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.7228805491068226,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9678827692687006,
+            "0.55": 0.9580972770032358,
+            "0.60": 0.9398180091006727,
+            "0.65": 0.926867798403843,
+            "0.70": 0.8931055934890207,
+            "0.75": 0.8303302854945069,
+            "0.80": 0.6717189063823577,
+            "0.85": 0.38580054689817533,
+            "0.90": 0.1419161525124588,
+            "0.95": 0.011790333077020466
+          },
+          "mAP_50_95": 0.6727327671629991,
+          "ground_truth_count": 2599,
+          "true_positives": 2548,
+          "false_positives": 2816,
+          "ignored_detections": 126
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9557555610663314,
+            "0.55": 0.9544758723532971,
+            "0.60": 0.945636083059546,
+            "0.65": 0.9361269035751174,
+            "0.70": 0.9249356234066161,
+            "0.75": 0.8991595831973265,
+            "0.80": 0.838745953998214,
+            "0.85": 0.7176797985222914,
+            "0.90": 0.4806490997098007,
+            "0.95": 0.07711883161791877
+          },
+          "mAP_50_95": 0.7730283310506461,
+          "ground_truth_count": 2697,
+          "true_positives": 2615,
+          "false_positives": 2669,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Baseline_seed41",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Baseline_seed41/best.pt",
+        "checkpoint_sha256": "08d475964e915b8cbf81acff281ba5ce3c5beba838a75a22f24e3185429b3939",
+        "selection": {
+          "selected_epoch": 10,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.004504905943264967
+        }
+      },
+      "image_count": 1465
+    },
+    "Baseline_seed42": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.7223580987485503,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9631439636566401,
+            "0.55": 0.9548753842727857,
+            "0.60": 0.9414226421475129,
+            "0.65": 0.9265456589076544,
+            "0.70": 0.8908497253437859,
+            "0.75": 0.8171685725736727,
+            "0.80": 0.662804050814229,
+            "0.85": 0.4147288468841461,
+            "0.90": 0.13317004885898176,
+            "0.95": 0.014332577449307455
+          },
+          "mAP_50_95": 0.6719041470908717,
+          "ground_truth_count": 2599,
+          "true_positives": 2567,
+          "false_positives": 18863,
+          "ignored_detections": 186
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9665938027387901,
+            "0.55": 0.9607898431976264,
+            "0.60": 0.9526311784874079,
+            "0.65": 0.9360603395584076,
+            "0.70": 0.9159896832115991,
+            "0.75": 0.8907063081724698,
+            "0.80": 0.8376209615316859,
+            "0.85": 0.7264072175879265,
+            "0.90": 0.47234624799831565,
+            "0.95": 0.06897492157805998
+          },
+          "mAP_50_95": 0.7728120504062289,
+          "ground_truth_count": 2697,
+          "true_positives": 2644,
+          "false_positives": 4645,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Baseline_seed42",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Baseline_seed42/best.pt",
+        "checkpoint_sha256": "c06598b54e7d6901f2b4e04d6be58c3913e944a9a4a83dc24556b58c8954a4b3",
+        "selection": {
+          "selected_epoch": 9,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.004323491469170337
+        }
+      },
+      "image_count": 1465
+    },
+    "DR_seed40": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6548504780259492,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9387226898901484,
+            "0.55": 0.9316518082627679,
+            "0.60": 0.9148977205515316,
+            "0.65": 0.889068615935164,
+            "0.70": 0.8495835960478416,
+            "0.75": 0.7596120991904376,
+            "0.80": 0.5301889910829936,
+            "0.85": 0.26132653222293856,
+            "0.90": 0.06188293020770143,
+            "0.95": 0.003658401758463067
+          },
+          "mAP_50_95": 0.6140593385149987,
+          "ground_truth_count": 2599,
+          "true_positives": 2526,
+          "false_positives": 18232,
+          "ignored_detections": 140
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9436286706786746,
+            "0.55": 0.9372937175544382,
+            "0.60": 0.9297786949357689,
+            "0.65": 0.9185803773887596,
+            "0.70": 0.891069353781863,
+            "0.75": 0.8324850396631399,
+            "0.80": 0.7101955632051923,
+            "0.85": 0.5416620268932406,
+            "0.90": 0.23503434359187547,
+            "0.95": 0.01668838767604607
+          },
+          "mAP_50_95": 0.6956416175368998,
+          "ground_truth_count": 2697,
+          "true_positives": 2614,
+          "false_positives": 11817,
+          "ignored_detections": 4
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "DR_seed40",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/DR_seed40/best.pt",
+        "checkpoint_sha256": "82d6f321587c3debc5825517519ee03277243b804f5f71dedbee61d5912618c8",
+        "selection": {
+          "selected_epoch": 4,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.004537413039311023
+        }
+      },
+      "image_count": 1465
+    },
+    "DR_seed41": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6930613193588677,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.953442414627547,
+            "0.55": 0.939075709418183,
+            "0.60": 0.9196941489775712,
+            "0.65": 0.885008443433365,
+            "0.70": 0.8424190515364303,
+            "0.75": 0.772781503469621,
+            "0.80": 0.6269423037371683,
+            "0.85": 0.33330450629280917,
+            "0.90": 0.0858054130090904,
+            "0.95": 0.004760376118222952
+          },
+          "mAP_50_95": 0.6363233870620009,
+          "ground_truth_count": 2599,
+          "true_positives": 2543,
+          "false_positives": 9760,
+          "ignored_detections": 182
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9584663359964065,
+            "0.55": 0.9553347893515297,
+            "0.60": 0.9444578443893515,
+            "0.65": 0.9346785048099037,
+            "0.70": 0.9191092813686493,
+            "0.75": 0.8887498024831335,
+            "0.80": 0.8194178432862184,
+            "0.85": 0.6615686894050393,
+            "0.90": 0.3659785342402574,
+            "0.95": 0.05023089122685645
+          },
+          "mAP_50_95": 0.7497992516557346,
+          "ground_truth_count": 2697,
+          "true_positives": 2633,
+          "false_positives": 5669,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "DR_seed41",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/DR_seed41/best.pt",
+        "checkpoint_sha256": "5a3b824b923b6793da189ef67c259754ffb8c306486b879898b2655825aa6523",
+        "selection": {
+          "selected_epoch": 6,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.0049769013486456355
+        }
+      },
+      "image_count": 1465
+    },
+    "DR_seed42": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6670848377970378,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9391590171423206,
+            "0.55": 0.9288680934456968,
+            "0.60": 0.9059532917375274,
+            "0.65": 0.8692086419481493,
+            "0.70": 0.8126711959808715,
+            "0.75": 0.723333195846642,
+            "0.80": 0.5523184424147524,
+            "0.85": 0.2984510519876849,
+            "0.90": 0.06936706744516533,
+            "0.95": 0.0018857202278669426
+          },
+          "mAP_50_95": 0.6101215718176678,
+          "ground_truth_count": 2599,
+          "true_positives": 2524,
+          "false_positives": 23693,
+          "ignored_detections": 118
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.955538553136512,
+            "0.55": 0.9466432564973352,
+            "0.60": 0.9367666540067026,
+            "0.65": 0.9219410158345847,
+            "0.70": 0.8912983059682777,
+            "0.75": 0.8526165999186569,
+            "0.80": 0.7592177733972522,
+            "0.85": 0.6007333677011859,
+            "0.90": 0.3432341867424721,
+            "0.95": 0.03249132456109832
+          },
+          "mAP_50_95": 0.7240481037764077,
+          "ground_truth_count": 2697,
+          "true_positives": 2627,
+          "false_positives": 6161,
+          "ignored_detections": 2
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "DR_seed42",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/DR_seed42/best.pt",
+        "checkpoint_sha256": "c9fb1dfaf75c49fe835e79cd340844a9e3d890259a2289a2eb80a75f5483197d",
+        "selection": {
+          "selected_epoch": 5,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.004938091119411484
+        }
+      },
+      "image_count": 1465
+    },
+    "AFA_seed40": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6537624691229953,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9277413033583904,
+            "0.55": 0.9177437606753626,
+            "0.60": 0.9032776624035841,
+            "0.65": 0.8800296215112905,
+            "0.70": 0.8307766185537914,
+            "0.75": 0.7448897790822846,
+            "0.80": 0.5487990911401542,
+            "0.85": 0.26875334374163506,
+            "0.90": 0.05427781381374605,
+            "0.95": 0.0027035862816440015
+          },
+          "mAP_50_95": 0.6078992580561883,
+          "ground_truth_count": 2599,
+          "true_positives": 2519,
+          "false_positives": 15249,
+          "ignored_detections": 135
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.944192226801587,
+            "0.55": 0.938064438406605,
+            "0.60": 0.9308790330122783,
+            "0.65": 0.9171603187805498,
+            "0.70": 0.8951275573065454,
+            "0.75": 0.8472941014017933,
+            "0.80": 0.739811084959508,
+            "0.85": 0.5348132990404713,
+            "0.90": 0.23758168421107756,
+            "0.95": 0.011333057977608186
+          },
+          "mAP_50_95": 0.6996256801898023,
+          "ground_truth_count": 2697,
+          "true_positives": 2623,
+          "false_positives": 19603,
+          "ignored_detections": 1
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "AFA_seed40",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/AFA_seed40/best.pt",
+        "checkpoint_sha256": "91234fe8e938c2ffd62d013887b028f98066c020c8b64aa9b3971c4008fe2396",
+        "selection": {
+          "selected_epoch": 4,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.0028340470405966516
+        }
+      },
+      "image_count": 1465
+    },
+    "AFA_seed41": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.5842720791215508,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.8709937945895346,
+            "0.55": 0.8568394532869855,
+            "0.60": 0.8397169436956,
+            "0.65": 0.8135129471600108,
+            "0.70": 0.7639441748355975,
+            "0.75": 0.6676870105663356,
+            "0.80": 0.4376075880390013,
+            "0.85": 0.17768371634295174,
+            "0.90": 0.03463425238493661,
+            "0.95": 0.0006945043689666428
+          },
+          "mAP_50_95": 0.5463314385269921,
+          "ground_truth_count": 2599,
+          "true_positives": 2447,
+          "false_positives": 31073,
+          "ignored_detections": 112
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9181210260872112,
+            "0.55": 0.9097202103123094,
+            "0.60": 0.8999655502734607,
+            "0.65": 0.8835174752502544,
+            "0.70": 0.8514921436512527,
+            "0.75": 0.7487840119339347,
+            "0.80": 0.5795436497410732,
+            "0.85": 0.336597735941543,
+            "0.90": 0.08974627926875219,
+            "0.95": 0.0046391147013024325
+          },
+          "mAP_50_95": 0.6222127197161094,
+          "ground_truth_count": 2697,
+          "true_positives": 2563,
+          "false_positives": 26257,
+          "ignored_detections": 5
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "AFA_seed41",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/AFA_seed41/best.pt",
+        "checkpoint_sha256": "5b79cb837f33e0c2b6e42d6003de72f945b01bc6f513442083dace58c32c23c8",
+        "selection": {
+          "selected_epoch": 2,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.005437556297530029
+        }
+      },
+      "image_count": 1465
+    },
+    "AFA_seed42": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.7170116789895373,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9611717458097886,
+            "0.55": 0.9557135335790368,
+            "0.60": 0.9463139271016006,
+            "0.65": 0.9262240880723528,
+            "0.70": 0.9025946517647251,
+            "0.75": 0.8392110186970179,
+            "0.80": 0.6667727915051688,
+            "0.85": 0.3947570446502047,
+            "0.90": 0.1311526394087996,
+            "0.95": 0.006747463518938402
+          },
+          "mAP_50_95": 0.6730658904107634,
+          "ground_truth_count": 2599,
+          "true_positives": 2537,
+          "false_positives": 4173,
+          "ignored_detections": 123
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9607152767845036,
+            "0.55": 0.9533194602831397,
+            "0.60": 0.9448608890286166,
+            "0.65": 0.9352232225522017,
+            "0.70": 0.9161322764879317,
+            "0.75": 0.8904155429105599,
+            "0.80": 0.8383259073376317,
+            "0.85": 0.7133492699724261,
+            "0.90": 0.4081302539949073,
+            "0.95": 0.04910257633119432
+          },
+          "mAP_50_95": 0.7609574675683113,
+          "ground_truth_count": 2697,
+          "true_positives": 2640,
+          "false_positives": 5166,
+          "ignored_detections": 1
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "AFA_seed42",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/AFA_seed42/best.pt",
+        "checkpoint_sha256": "d7713bcc7f4f113562cbbd618112af792342fba9280c0da1be8ebd63a544371e",
+        "selection": {
+          "selected_epoch": 10,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.004204807746359312
+        }
+      },
+      "image_count": 1465
+    },
+    "Combo_seed40": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.6304123024550099,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9156870904836587,
+            "0.55": 0.9003021045425755,
+            "0.60": 0.8840461513261935,
+            "0.65": 0.8466867055416788,
+            "0.70": 0.8055353869152212,
+            "0.75": 0.6899482191867125,
+            "0.80": 0.5101337251038904,
+            "0.85": 0.2544108850790629,
+            "0.90": 0.04382314941378802,
+            "0.95": 0.0019432202366578121
+          },
+          "mAP_50_95": 0.5852516637829439,
+          "ground_truth_count": 2599,
+          "true_positives": 2480,
+          "false_positives": 6438,
+          "ignored_detections": 88
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9330421218450162,
+            "0.55": 0.9262181896650823,
+            "0.60": 0.9180165379270528,
+            "0.65": 0.90115951917407,
+            "0.70": 0.8724261979036404,
+            "0.75": 0.8092882130526835,
+            "0.80": 0.7040770131646608,
+            "0.85": 0.5000809996264334,
+            "0.90": 0.17608341418975923,
+            "0.95": 0.015337204722359573
+          },
+          "mAP_50_95": 0.6755729411270759,
+          "ground_truth_count": 2697,
+          "true_positives": 2571,
+          "false_positives": 6144,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Combo_seed40",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Combo_seed40/best.pt",
+        "checkpoint_sha256": "fbadeb435ab48758fe59465ea5650d91a03ee292556186c29b6264e49a1fdb45",
+        "selection": {
+          "selected_epoch": 3,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.0034206918656252525
+        }
+      },
+      "image_count": 1465
+    },
+    "Combo_seed41": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.7275568344997967,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9725060537188642,
+            "0.55": 0.965101018269839,
+            "0.60": 0.9559247597068549,
+            "0.65": 0.9369092995790439,
+            "0.70": 0.8990049582076414,
+            "0.75": 0.8316195520167865,
+            "0.80": 0.6736563889950253,
+            "0.85": 0.4162282796764634,
+            "0.90": 0.14877740122428595,
+            "0.95": 0.01310528123590994
+          },
+          "mAP_50_95": 0.6812832992630714,
+          "ground_truth_count": 2599,
+          "true_positives": 2556,
+          "false_positives": 5529,
+          "ignored_detections": 169
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9640346030699116,
+            "0.55": 0.9602138861883254,
+            "0.60": 0.9526174779921585,
+            "0.65": 0.9358035466830208,
+            "0.70": 0.9219266840348018,
+            "0.75": 0.892654967715131,
+            "0.80": 0.8370979928218153,
+            "0.85": 0.7224965190328705,
+            "0.90": 0.4896747932535197,
+            "0.95": 0.06178322657366648
+          },
+          "mAP_50_95": 0.7738303697365221,
+          "ground_truth_count": 2697,
+          "true_positives": 2642,
+          "false_positives": 4688,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Combo_seed41",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Combo_seed41/best.pt",
+        "checkpoint_sha256": "f6a7fab00b3ee29330a9a44f259528a878250655c4f8af4a6226e3dc0a5c7eca",
+        "selection": {
+          "selected_epoch": 10,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.0024862378123318577
+        }
+      },
+      "image_count": 1465
+    },
+    "Combo_seed42": {
+      "ignore_ioa_threshold": 0.5,
+      "mAP_50_95": 0.649637657620777,
+      "classes": {
+        "Pedestrian": {
+          "AP_by_IoU": {
+            "0.50": 0.9223359649763845,
+            "0.55": 0.9080975717551015,
+            "0.60": 0.8927423787751176,
+            "0.65": 0.8609448871534867,
+            "0.70": 0.8212790430881666,
+            "0.75": 0.7324704000864711,
+            "0.80": 0.5478238146961548,
+            "0.85": 0.28040777328470934,
+            "0.90": 0.07294627271963318,
+            "0.95": 0.0016180583544560647
+          },
+          "mAP_50_95": 0.6040666164889682,
+          "ground_truth_count": 2599,
+          "true_positives": 2492,
+          "false_positives": 12068,
+          "ignored_detections": 113
+        },
+        "Cyclist": {
+          "AP_by_IoU": {
+            "0.50": 0.9380922894524469,
+            "0.55": 0.9298782808627428,
+            "0.60": 0.9223487599683176,
+            "0.65": 0.9133657128583359,
+            "0.70": 0.89032703501741,
+            "0.75": 0.8342064459440683,
+            "0.80": 0.7246628066126913,
+            "0.85": 0.5429270520400581,
+            "0.90": 0.24108715860892757,
+            "0.95": 0.015191446160858024
+          },
+          "mAP_50_95": 0.6952086987525856,
+          "ground_truth_count": 2697,
+          "true_positives": 2570,
+          "false_positives": 5497,
+          "ignored_detections": 0
+        }
+      },
+      "checkpoint": {
+        "checkpoint_id": "Combo_seed42",
+        "checkpoint_path": "data/kitti_experiment/student_15run_10k_retry/Combo_seed42/best.pt",
+        "checkpoint_sha256": "c0735580c708db96ab8594b8ca1acf2df3b38bfbce88d61abe1c15136dce318e",
+        "selection": {
+          "selected_epoch": 4,
+          "selection_metric": "internal KITTI mAP@0.50:0.95",
+          "selection_value": 0.007486260562470775
+        }
+      },
+      "image_count": 1465
+    }
+  }
+}
