@@ -17,6 +17,7 @@ from kitti_two_class_eval import (
     box_iou,
     parse_kitti_annotation,
 )
+from kitti_checkpoint_manifest import verify_checkpoint_provenance
 
 
 VARIANTS = ("Baseline", "DR", "AFA", "Combo", "UpperBound")
@@ -303,6 +304,7 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--labels", type=Path, required=True)
     parser.add_argument("--predictions-dir", type=Path, required=True)
+    parser.add_argument("--checkpoint-manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--draws", type=int, default=10000)
     parser.add_argument("--seed", type=int, default=20261108)
@@ -312,6 +314,9 @@ def main() -> None:
         parser.error("--draws and --batch-size must be positive")
 
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
+    checkpoint_manifest = json.loads(
+        args.checkpoint_manifest.read_text(encoding="utf-8")
+    )
     image_ids = manifest["split_image_ids"]["test"]
     annotations = load_annotations(image_ids, args.labels)
     caches: dict[str, list[RunMetricCache]] = {}
@@ -335,8 +340,18 @@ def main() -> None:
                 image_ids
             ):
                 raise ValueError("Unexpected test evaluation report: {}".format(report_path))
-            if Path(report["checkpoint"]).resolve() != (run_dir / "best.pt").resolve():
-                raise ValueError("Test report does not use the validation-selected checkpoint")
+            report_checkpoint = report.get("checkpoint")
+            if not isinstance(report_checkpoint, str):
+                raise ValueError(
+                    "Test report has no checkpoint path: {}".format(report_path)
+                )
+            verify_checkpoint_provenance(
+                run_dir.name,
+                args.runs,
+                checkpoint_manifest,
+                selection,
+                report_checkpoint,
+            )
             point_estimates[variant].append(float(report["mAP_50_95"]))
             prediction_path = args.predictions_dir / "{}_seed{}_predictions.json.gz".format(
                 variant, seed

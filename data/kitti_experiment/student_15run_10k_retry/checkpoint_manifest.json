@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "runs": {
+    "Baseline_seed40": {
+      "checkpoint_id": "Baseline_seed40",
+      "checkpoint_path": "Baseline_seed40/best.pt",
+      "checkpoint_sha256": "ace4e48a3dcf49315e15d57f2aa8e07a7ff52d9b7168e3d932bf79d5832788a2",
+      "selection": {
+        "selected_epoch": 6,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.005862872147782675
+      }
+    },
+    "Baseline_seed41": {
+      "checkpoint_id": "Baseline_seed41",
+      "checkpoint_path": "Baseline_seed41/best.pt",
+      "checkpoint_sha256": "08d475964e915b8cbf81acff281ba5ce3c5beba838a75a22f24e3185429b3939",
+      "selection": {
+        "selected_epoch": 10,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.004504905943264967
+      }
+    },
+    "Baseline_seed42": {
+      "checkpoint_id": "Baseline_seed42",
+      "checkpoint_path": "Baseline_seed42/best.pt",
+      "checkpoint_sha256": "c06598b54e7d6901f2b4e04d6be58c3913e944a9a4a83dc24556b58c8954a4b3",
+      "selection": {
+        "selected_epoch": 9,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.004323491469170337
+      }
+    },
+    "DR_seed40": {
+      "checkpoint_id": "DR_seed40",
+      "checkpoint_path": "DR_seed40/best.pt",
+      "checkpoint_sha256": "82d6f321587c3debc5825517519ee03277243b804f5f71dedbee61d5912618c8",
+      "selection": {
+        "selected_epoch": 4,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.004537413039311023
+      }
+    },
+    "DR_seed41": {
+      "checkpoint_id": "DR_seed41",
+      "checkpoint_path": "DR_seed41/best.pt",
+      "checkpoint_sha256": "5a3b824b923b6793da189ef67c259754ffb8c306486b879898b2655825aa6523",
+      "selection": {
+        "selected_epoch": 6,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.0049769013486456355
+      }
+    },
+    "DR_seed42": {
+      "checkpoint_id": "DR_seed42",
+      "checkpoint_path": "DR_seed42/best.pt",
+      "checkpoint_sha256": "c9fb1dfaf75c49fe835e79cd340844a9e3d890259a2289a2eb80a75f5483197d",
+      "selection": {
+        "selected_epoch": 5,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.004938091119411484
+      }
+    },
+    "AFA_seed40": {
+      "checkpoint_id": "AFA_seed40",
+      "checkpoint_path": "AFA_seed40/best.pt",
+      "checkpoint_sha256": "91234fe8e938c2ffd62d013887b028f98066c020c8b64aa9b3971c4008fe2396",
+      "selection": {
+        "selected_epoch": 4,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.0028340470405966516
+      }
+    },
+    "AFA_seed41": {
+      "checkpoint_id": "AFA_seed41",
+      "checkpoint_path": "AFA_seed41/best.pt",
+      "checkpoint_sha256": "5b79cb837f33e0c2b6e42d6003de72f945b01bc6f513442083dace58c32c23c8",
+      "selection": {
+        "selected_epoch": 2,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.005437556297530029
+      }
+    },
+    "AFA_seed42": {
+      "checkpoint_id": "AFA_seed42",
+      "checkpoint_path": "AFA_seed42/best.pt",
+      "checkpoint_sha256": "d7713bcc7f4f113562cbbd618112af792342fba9280c0da1be8ebd63a544371e",
+      "selection": {
+        "selected_epoch": 10,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.004204807746359312
+      }
+    },
+    "Combo_seed40": {
+      "checkpoint_id": "Combo_seed40",
+      "checkpoint_path": "Combo_seed40/best.pt",
+      "checkpoint_sha256": "fbadeb435ab48758fe59465ea5650d91a03ee292556186c29b6264e49a1fdb45",
+      "selection": {
+        "selected_epoch": 3,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.0034206918656252525
+      }
+    },
+    "Combo_seed41": {
+      "checkpoint_id": "Combo_seed41",
+      "checkpoint_path": "Combo_seed41/best.pt",
+      "checkpoint_sha256": "f6a7fab00b3ee29330a9a44f259528a878250655c4f8af4a6226e3dc0a5c7eca",
+      "selection": {
+        "selected_epoch": 10,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.0024862378123318577
+      }
+    },
+    "Combo_seed42": {
+      "checkpoint_id": "Combo_seed42",
+      "checkpoint_path": "Combo_seed42/best.pt",
+      "checkpoint_sha256": "c0735580c708db96ab8594b8ca1acf2df3b38bfbce88d61abe1c15136dce318e",
+      "selection": {
+        "selected_epoch": 4,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.007486260562470775
+      }
+    },
+    "UpperBound_seed40": {
+      "checkpoint_id": "UpperBound_seed40",
+      "checkpoint_path": "UpperBound_seed40/best.pt",
+      "checkpoint_sha256": "153ab155d366f3239f23de7011a4e606801162bf59ef2e13fab35489b425f1f9",
+      "selection": {
+        "selected_epoch": 9,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.09028653649499667
+      }
+    },
+    "UpperBound_seed41": {
+      "checkpoint_id": "UpperBound_seed41",
+      "checkpoint_path": "UpperBound_seed41/best.pt",
+      "checkpoint_sha256": "0d043ce43a142ae8aaf87a28a66a12ff2dfbd06d633a99a9b7d4f7b7072fc33f",
+      "selection": {
+        "selected_epoch": 9,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.07467959447422376
+      }
+    },
+    "UpperBound_seed42": {
+      "checkpoint_id": "UpperBound_seed42",
+      "checkpoint_path": "UpperBound_seed42/best.pt",
+      "checkpoint_sha256": "110264e70822a9f6851fd47d39702f7f2bf17289d8941eedc2d3f4aca872708b",
+      "selection": {
+        "selected_epoch": 9,
+        "selection_metric": "internal KITTI mAP@0.50:0.95",
+        "selection_value": 0.08081728380502143
+      }
+    }
+  }
+}
