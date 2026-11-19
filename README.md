@@ -52,3 +52,10 @@ CARLA-validation. Сохранённые предсказания 12 выбра�
 Метрики можно пересчитать без инференса и GPU командой python .\carla_validation_eval.py --mode score. 
 Для повторного инференса на локально доступных CARLA-validation изображениях и checkpoint нужно выполнить python .\carla_validation_eval.py --mode all --device 0 --batch-size 8.
 
+Для подготовки KITTI и bootstrap требуется Python 3.10. Версии зависимостей зафиксированы в requirements-kitti-tools.txt.
+python -m pip install -r .\requirements-kitti-tools.txt
+python .\prepare_kitti_training_data.py --split-manifest .\data\kitti_experiment\yolo8\split_manifest.json --images .\data\kitti_raw\training\image_2 --labels .\data\kitti_raw\training\label_2 --output .\data\kitti_experiment\kitti_training_subsets
+python .\kitti_checkpoint_manifest.py --runs .\data\kitti_experiment\student_15run_10k_retry --output .\data\kitti_experiment\student_15run_10k_retry\checkpoint_manifest.json
+python .\kitti_factorial_bootstrap.py --runs .\data\kitti_experiment\student_15run_10k_retry --manifest .\data\kitti_experiment\yolo8\split_manifest.json --labels .\data\kitti_raw\training\label_2 --predictions-dir .\data\kitti_experiment\student_15run_10k_retry\test_eval --checkpoint-manifest .\data\kitti_experiment\student_15run_10k_retry\checkpoint_manifest.json --output .\data\kitti_experiment\student_15run_10k_retry\test_eval\factorial_bootstrap_reproduced.json --draws 10000 --seed 20261108 --batch-size 32
+python -m unittest test_kitti_experiment test_prepare_kitti_training_data test_kitti_checkpoint_manifest test_kitti_factorial_bootstrap -v
+
