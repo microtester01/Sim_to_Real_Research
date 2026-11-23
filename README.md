@@ -48,3 +48,5 @@ python .\kitti_checkpoint_manifest.py --runs .\data\kitti_experiment\student_15r
 python .\kitti_factorial_bootstrap.py --runs .\data\kitti_experiment\student_15run_10k_retry --manifest .\data\kitti_experiment\yolo8\split_manifest.json --labels .\data\kitti_raw\training\label_2 --predictions-dir .\data\kitti_experiment\student_15run_10k_retry\test_eval --checkpoint-manifest .\data\kitti_experiment\student_15run_10k_retry\checkpoint_manifest.json --group-map .\data\kitti_experiment\student_15run_10k_retry\test_eval\kitti_test_phash_group_map.json --output .\data\kitti_experiment\student_15run_10k_retry\test_eval\factorial_bootstrap_phash_crossed_ties_reproduced.json --draws 10000 --seed 20261108 --batch-size 32
 python -m unittest test_kitti_experiment test_prepare_kitti_training_data test_kitti_checkpoint_manifest test_kitti_factorial_bootstrap -v
 
+Актуализация статистического протокола: в итоговом crossed pHash-bootstrap точечные mAP пересчитываются из сохранённых предсказаний тем же score-block правилом для равных confidence, что и bootstrap-оценки. Значения из исходных test-отчётов сохраняются в JSON только для сверки.
+
