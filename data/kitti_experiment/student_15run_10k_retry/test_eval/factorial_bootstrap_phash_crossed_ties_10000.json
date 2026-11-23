@@ -60,7 +60,7 @@
     }
   },
   "p_values": {
-    "positive_interaction": 0.6008399160083991,
+    "positive_interaction": 0.5955404459554045,
     "combo_practical_gain": 1.0,
     "upper_bound_gap_within_15_percent": 1.0
   },
@@ -71,7 +71,7 @@
     "test_image_count": 1496,
     "test_image_group_count": 1477,
     "test_image_group_map": "data\\kitti_experiment\\student_15run_10k_retry\\test_eval\\kitti_test_phash_group_map.json",
-    "tie_policy": "point estimates are retained from the validated test reports; for bootstrap resamples, within-image equal-confidence detections retain prediction order for matching and equal-confidence TP/FP outcomes are accumulated as one score block",
+    "tie_policy": "primary point estimates and bootstrap resamples use the same score-block AP: prediction order is retained for matching within each image, then equal-confidence TP/FP outcomes are accumulated together",
     "training_seeds": [
       40,
       41,
@@ -88,33 +88,6 @@
     "multiple_testing": "Holm step-down adjustment across the three preregistered criteria"
   },
   "point_estimates_by_seed": {
-    "Baseline": [
-      0.0020237694721966263,
-      0.001634084151044745,
-      0.0006135807442516702
-    ],
-    "DR": [
-      0.002650640835073691,
-      0.0021114529385682815,
-      0.0012404228564585947
-    ],
-    "AFA": [
-      0.0014275519772022343,
-      0.000819330825107298,
-      0.0007937531230903421
-    ],
-    "Combo": [
-      0.0009706423625287339,
-      0.0011497643714815375,
-      0.0021154410071303783
-    ],
-    "UpperBound": [
-      0.0946143431945308,
-      0.08844356344210363,
-      0.08779134838601098
-    ]
-  },
-  "bootstrap_tie_block_point_estimates_by_seed": {
     "Baseline": [
       0.0020233932713897697,
       0.001619484345861756,
@@ -141,37 +114,109 @@
       0.0876674438885995
     ]
   },
-  "bootstrap_tie_block_point_estimate_deltas_by_seed": {
+  "point_class_AP_by_seed": {
     "Baseline": [
-      -3.7620080685666843e-07,
-      -1.4599805182988982e-05,
-      -6.858584691688506e-07
+      {
+        "Pedestrian": 8.182681317310246e-05,
+        "Cyclist": 0.003964959729606437
+      },
+      {
+        "Pedestrian": 0.0004394808626757256,
+        "Cyclist": 0.0027994878290477864
+      },
+      {
+        "Pedestrian": 0.00011402902136960803,
+        "Cyclist": 0.0011117607501953948
+      }
     ],
     "DR": [
-      -2.4277949129307766e-06,
-      -1.8932079532286723e-05,
-      -1.5967296258525285e-05
+      {
+        "Pedestrian": 0.0004896413557062599,
+        "Cyclist": 0.00480678472461526
+      },
+      {
+        "Pedestrian": 0.00016102448036747196,
+        "Cyclist": 0.004024017237704518
+      },
+      {
+        "Pedestrian": 0.0009036031740212256,
+        "Cyclist": 0.0015453079463789133
+      }
     ],
     "AFA": [
-      -2.8733973787701053e-07,
-      -1.0966097138986365e-06,
-      -3.567770078048531e-08
+      {
+        "Pedestrian": 0.00021003302885345154,
+        "Cyclist": 0.002644496246075263
+      },
+      {
+        "Pedestrian": 8.631542648313459e-05,
+        "Cyclist": 0.001550153004303664
+      },
+      {
+        "Pedestrian": 0.0004659289458357601,
+        "Cyclist": 0.001121505944943363
+      }
     ],
     "Combo": [
-      -4.9862068409443384e-06,
-      -5.808443276926391e-07,
-      -7.582957943746797e-07
+      {
+        "Pedestrian": 0.00045049504950495046,
+        "Cyclist": 0.0014808172618706286
+      },
+      {
+        "Pedestrian": 3.0807327408722955e-05,
+        "Cyclist": 0.002267559726898967
+      },
+      {
+        "Pedestrian": 0.0005098387710683059,
+        "Cyclist": 0.0037195266516037015
+      }
     ],
     "UpperBound": [
-      -0.00016989649512844096,
-      -0.00012271695230825497,
-      -0.00012390449741148113
+      {
+        "Pedestrian": 0.15098479915060287,
+        "Cyclist": 0.03790409424820186
+      },
+      {
+        "Pedestrian": 0.13798036519604173,
+        "Cyclist": 0.03866132778354904
+      },
+      {
+        "Pedestrian": 0.14312730523273154,
+        "Cyclist": 0.03220758254446746
+      }
+    ]
+  },
+  "validated_test_report_mAP_by_seed": {
+    "Baseline": [
+      0.0020237694721966263,
+      0.001634084151044745,
+      0.0006135807442516702
+    ],
+    "DR": [
+      0.002650640835073691,
+      0.0021114529385682815,
+      0.0012404228564585947
+    ],
+    "AFA": [
+      0.0014275519772022343,
+      0.000819330825107298,
+      0.0007937531230903421
+    ],
+    "Combo": [
+      0.0009706423625287339,
+      0.0011497643714815375,
+      0.0021154410071303783
+    ],
+    "UpperBound": [
+      0.0946143431945308,
+      0.08844356344210363,
+      0.08779134838601098
     ]
   },
   "point_estimate_effects": {
-    "interaction": -0.00017862348228891664,
-    "combo_minus_baseline": -1.186220878413068e-05,
-    "combo_minus_85pct_upper_bound": -0.07532867300936931
+    "interaction": -0.0001730369534774926,
+    "combo_minus_baseline": -8.75003628546321e-06,
+    "combo_minus_85pct_upper_bound": -0.07521276804065001
   },
   "holm_adjusted_p_values": {
     "positive_interaction": 1.0,
@@ -180,7 +225,7 @@
   },
   "criteria": {
     "positive_interaction": {
-      "raw_p": 0.6008399160083991,
+      "raw_p": 0.5955404459554045,
       "holm_adjusted_p": 1.0,
       "confirmed_at_0_05": false
     },

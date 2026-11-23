@@ -74,6 +74,43 @@ class KittiFactorialBootstrapTests(unittest.TestCase):
         self.assertAlmostEqual(tied_map, 5.0 / 6.0, places=12)
         self.assertAlmostEqual(stable_order_map, 1.0, places=12)
 
+    def test_primary_point_estimate_matches_bootstrap_kernel_at_unit_weights(self):
+        image_ids = ["positive", "negative"]
+        annotations = {
+            "positive": (
+                {
+                    "Pedestrian": [[0, 0, 10, 10]],
+                    "Cyclist": [[30, 30, 40, 40]],
+                },
+                [],
+                [],
+            ),
+            "negative": (
+                {"Pedestrian": [], "Cyclist": []},
+                [],
+                [],
+            ),
+        }
+        predictions = {
+            "positive": [
+                (0, 0.5, [0, 0, 10, 10]),
+                (1, 0.9, [30, 30, 40, 40]),
+            ],
+            "negative": [(0, 0.5, [20, 20, 30, 30])],
+        }
+        cache = RunMetricCache(image_ids, predictions, annotations)
+        unit_weights = np.ones((1, len(image_ids)), dtype=np.float64)
+
+        primary_point_estimate = cache.map_for_image_counts(
+            unit_weights, group_ties=True
+        )[0]
+        bootstrap_kernel_estimate = cache.map_for_image_counts(unit_weights)[0]
+        class_ap = cache.class_ap_for_image_counts(unit_weights, group_ties=True)
+
+        self.assertAlmostEqual(primary_point_estimate, 0.75, places=12)
+        self.assertAlmostEqual(primary_point_estimate, bootstrap_kernel_estimate, places=12)
+        self.assertAlmostEqual(primary_point_estimate, np.mean(class_ap[:, 0]), places=12)
+
     def test_group_map_is_a_complete_partition_of_test_images(self):
         groups = {
             "image_count": 3,

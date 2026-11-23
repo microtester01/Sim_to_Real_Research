@@ -190,7 +190,7 @@ class RunMetricCache:
         ap[total_gt == 0] = np.nan
         return ap
 
-    def map_for_image_counts(
+    def class_ap_for_image_counts(
         self, image_counts: np.ndarray, group_ties: bool = True
     ) -> np.ndarray:
         class_aps = []
@@ -202,7 +202,14 @@ class RunMetricCache:
                 for events in self.events[class_name]
             ]
             class_aps.append(np.nanmean(np.stack(threshold_aps), axis=0))
-        return np.nanmean(np.stack(class_aps), axis=0)
+        return np.stack(class_aps, axis=0)
+
+    def map_for_image_counts(
+        self, image_counts: np.ndarray, group_ties: bool = True
+    ) -> np.ndarray:
+        return np.nanmean(
+            self.class_ap_for_image_counts(image_counts, group_ties), axis=0
+        )
 
 
 def load_annotations(
@@ -416,11 +423,13 @@ def main() -> None:
     annotations = load_annotations(image_ids, args.labels)
     caches: dict[str, list[RunMetricCache]] = {}
     point_estimates: dict[str, list[float]] = {}
-    tie_block_point_estimates: dict[str, list[float]] = {}
+    point_class_ap: dict[str, list[dict[str, float]]] = {}
+    test_report_mAP: dict[str, list[float]] = {}
     for variant in VARIANTS:
         caches[variant] = []
         point_estimates[variant] = []
-        tie_block_point_estimates[variant] = []
+        point_class_ap[variant] = []
+        test_report_mAP[variant] = []
         for seed in SEEDS:
             run_dir = args.runs / "{}_seed{}".format(variant, seed)
             selection_path = run_dir / "best_selection.json"
@@ -442,6 +451,7 @@ def main() -> None:
                 raise ValueError(
                     "Test report has no checkpoint path: {}".format(report_path)
                 )
+            report_mAP = float(report["mAP_50_95"])
             verify_checkpoint_provenance(
                 run_dir.name,
                 args.runs,
@@ -449,7 +459,7 @@ def main() -> None:
                 selection,
                 report_checkpoint,
             )
-            point_estimates[variant].append(float(report["mAP_50_95"]))
+            test_report_mAP[variant].append(report_mAP)
             prediction_path = args.predictions_dir / "{}_seed{}_predictions.json.gz".format(
                 variant, seed
             )
@@ -465,14 +475,25 @@ def main() -> None:
             original_score = float(
                 cache.map_for_image_counts(all_images, group_ties=False)[0]
             )
-            if not np.isclose(original_score, point_estimates[variant][-1], atol=1e-12):
+            if not np.isclose(original_score, report_mAP, atol=1e-12):
                 raise ValueError(
                     "Cached weighted AP does not reproduce test mAP for {} seed {}: {} vs {}".format(
-                        variant, seed, original_score, point_estimates[variant][-1]
+                        variant, seed, original_score, report_mAP
                     )
                 )
-            tie_block_point_estimates[variant].append(
+            point_estimates[variant].append(
                 float(cache.map_for_image_counts(all_images, group_ties=True)[0])
+            )
+            point_class_ap[variant].append(
+                {
+                    class_name: float(ap)
+                    for class_name, ap in zip(
+                        CLASSES,
+                        cache.class_ap_for_image_counts(
+                            all_images, group_ties=True
+                        )[:, 0],
+                    )
+                }
             )
             caches[variant].append(cache)
 
@@ -507,7 +528,7 @@ def main() -> None:
         "test_image_count": len(image_ids),
         "test_image_group_count": group_count,
         "test_image_group_map": str(args.group_map),
-        "tie_policy": "point estimates are retained from the validated test reports; for bootstrap resamples, within-image equal-confidence detections retain prediction order for matching and equal-confidence TP/FP outcomes are accumulated as one score block",
+        "tie_policy": "primary point estimates and bootstrap resamples use the same score-block AP: prediction order is retained for matching within each image, then equal-confidence TP/FP outcomes are accumulated together",
         "training_seeds": list(SEEDS),
         "checkpoint_selection": "best.pt selected exclusively by validation mAP",
         "primary_metric": "internal two-class mAP@0.50:0.95",
@@ -520,16 +541,8 @@ def main() -> None:
         "multiple_testing": "Holm step-down adjustment across the three preregistered criteria",
     }
     result["point_estimates_by_seed"] = point_estimates
-    result["bootstrap_tie_block_point_estimates_by_seed"] = tie_block_point_estimates
-    result["bootstrap_tie_block_point_estimate_deltas_by_seed"] = {
-        variant: [
-            tie_value - point_value
-            for tie_value, point_value in zip(
-                tie_block_point_estimates[variant], point_estimates[variant]
-            )
-        ]
-        for variant in VARIANTS
-    }
+    result["point_class_AP_by_seed"] = point_class_ap
+    result["validated_test_report_mAP_by_seed"] = test_report_mAP
     result["point_estimate_effects"] = point_estimate_effects
     adjusted = holm_adjust(result["p_values"])
     result["holm_adjusted_p_values"] = adjusted
